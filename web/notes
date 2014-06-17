@@ -1,0 +1,175 @@
+    
+
+
+REQUIRED CSS FOR ANIMATION
+    position:relative;
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    animation-iteration-count:infinite;
+    animation-play-state: paused;
+    
+
+
+    -webkit-transition-name: scrollRight;
+    -webkit-transition-duration: 3s;
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-iteration-count:infinite;
+    -webkit-transition-play-state: paused;
+
+
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+    animation-play-state: paused;
+
+
+
+Trying to make it js: 
+    /*chrome, safari, opera*/    
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count: 2;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 2;
+    animation-play-state: paused;
+
+
+//Attempted Animation Creator
+    
+    
+    function createAnimation(id, aName, aDuration, aTiming, aIteration, aPlayState){
+        
+        var sb;
+        sb += "<style type=\"text/css\">\n";
+        sb += "#";
+        sb += id;
+        sb += "{";
+        sb += "width:";
+        sb += getParentWidth(id)/2;
+        sb += ";";
+        sb += "-webkit-animation-name:";//scrollRight
+        sb += aName + ";";
+        sb += "-webkit-animation-duration:";//2s;
+        sb += aDuration + ";";
+        sb += "-webkit-animation-timing-function: ";//ease-out;
+        sb += aTiming + ";";
+        sb += "-webkit-animation-iteration-count: ";//2;
+        sb += aIteration + ";";
+        sb += "-webkit-animation-play-state: ";//paused;
+        sb += aPlayState + ";";
+    /*standard syntax*/
+        sb += "animation-name:";//scrollRight
+        sb += aName + ";";
+        sb += "animation-duration:";//2s;
+        sb += aDuration + ";";
+        sb += "animation-timing-function: ";//ease-out;
+        sb += aTiming + ";";
+        sb += "animation-iteration-count: ";//2;
+        sb += aIteration + ";";
+        sb += "animation-play-state: ";//paused;
+        sb += aPlayState + ";";
+        sb += "}";
+        sb += "</style>";
+        document.write(sb);
+        }
+
+
+    //set the New keyframe rules here
+keyframes.insertRule("0% { 
+  -webkit-transform: translate(100px,100px) rotate(" + (multiplier + 0) + "deg) 
+                     translate(-100px,-100px) rotate(" + (multiplier + 0) + "deg);
+  background-color:red; 
+}");
+keyframes.insertRule("13% { 
+  -webkit-transform: translate(100px,100px) rotate(" + (multiplier + 45) + "deg)
+                     translate(-100px,-100px) rotate(" + (multiplier + 45) + "deg); 
+}");
+
+<script type="text/javascript">
+    createAnimation(pictureBox, "scrollRight", "2s", "ease-out", 2, "paused");
+</script>
+
+
+    function playAnimation(){
+        document.getElementById("pictureBox").style.animationPlayState="running";
+        document.getElementById("pictureBox").style.WebkitAnimationPlayState="running";
+        //chrome and safari
+        console.log(getClosest(keys));
+        //setTimeout(pauseAnimation, 800);
+    }
+    
+    function pauseAnimation(){
+        document.getElementById("pictureBox").style.animationPlayState="paused";
+        document.getElementById("pictureBox").style.WebkitAnimationPlayState="paused";//chrome and safari
+    }
+
+
+    function getClosest(keyframe, comparisonFrame){
+        //curr stands for current keyframe
+        var curr = keyframe[0];
+        var diff = Math.abs(comparisonFrame - curr);//45-0=45
+        for(var val = 0, j = keyframe.length; val < j; val++){
+            var newdiff = Math.abs(comparisonFrame = keyframe[val]);//newdiff = 0 keyframe[0]=0
+            //If the difference between the current percent and the iterated
+            //keyframe is smaller, take the difference and the keyframe
+            if (newdiff < diff){ //if 0 is less than 50?? wtf?
+                //diff = newdiff;
+                curr = keyframe[val];//sets it back to how it was
+            }
+        }
+        return curr;
+    }
+
+
+    function intervalMan(){
+      var run = 0;
+      var ran = 1;
+      for(currentPercent=0;currentPercent<100;currentPercent++){
+      window.setInterval(intervalMan, 80);    
+      if(run==ran){
+          currentPercent++;
+          run = 0;
+          //clearInterval();
+          alert("currentPercent = " + currentPercent);
+          alert("Run = " + run);
+          continue;
+      }
+      if(currentPercent == firstPercent)
+      {
+        pauseAnimation();
+        clearInterval();
+        run=1;//first time run = 1, clears adds one to currentPercent continues?
+        continue;
+      }
+      else if(currentPercent < 100)
+      {
+        currentPercent += 1;
+        continue;
+      }
+      else
+      {
+        currentPercent = 0;
+        continue;
+      }
+      result.innerHTML = currentPercent;
+        }  
+    }

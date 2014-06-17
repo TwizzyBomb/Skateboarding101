@@ -1,0 +1,327 @@
+<html>
+<head>
+
+<style type="text/css">
+body {background-image:url(../images/transparentYellowPanel.png);
+background-color:transparent;
+background-size:100% 100%;
+background-repeat:no-repeat;
+background-position:50%50%;
+overflow-y:hidden;
+overflow-x:hidden;
+}
+
+div#parentWindow{
+    width:100%;
+    height:100%;
+}
+div#container
+{
+display:block;
+text-align:center;
+margin:0 auto;
+top:0px;
+//left:0px;
+
+width:500px;
+height:300px;
+
+overflow-x:hidden;
+background-color:transparent;
+border:2px solid black;
+}
+
+//red
+#redPictureBox
+{   
+    position:relative;
+    display:block;
+    background-color:blue;
+    background-image:url('../images/RedCircle.png');
+    background-position:center;
+    //left:0px;
+    //top:600px;
+    width:250px;
+    height:250px;
+    
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+
+}
+
+#greenPictureBox 
+{   
+    position:relative;
+    display:none;
+    background-color:blue;
+    background-image:url('../images/GreenSquare.png');
+    background-position:center;
+    //left:0px;
+    //top:600px;
+    width:250px;
+    height:250px;
+    
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+
+}
+
+#yellowPictureBox 
+{   
+    position:relative;
+    display:none;
+    background-color:blue;
+    background-image:url('../images/YellowTriangle.png');
+    background-position:center;
+    //left:0px;
+    //top:600px;
+    width:250px;
+    height:250px;
+    
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: paused;
+
+}
+/* Chrome, Saffari, Operal */
+@-webkit-keyframes scrollRight
+{
+/*what it does during the animations*/
+    0% {left:-250px;top:0px;opacity:0.01; }
+    50% {left:-62.5px;top:0px;opacity:.5;}
+    100% {left:125px;top:0px;opacity:1;}
+}
+/*standard or IE */
+@keyframes scrollRight
+{
+/*what it does during the animations*/
+    0% {left:0px;top:0px;opacity:0.01; }
+    50% {left:125px;top:0px;opacity:.5;}
+    100% {left:250px;top:0px;opacity:1;}
+}
+
+@-webkit-keyframes scrollRightFurther
+{
+/*what it does during the animations*/
+    0% {  left:00px; top: 0px; opacity:1; }
+    100%   {  left:500px; top: 0px; opacity:0.01;  }
+}
+/*standard or IE */
+@keyframes scrollRightFurther
+{/*what it does during the animations*/
+    0% {  left:00px; top: 0px; opacity:0.1; }
+    100%   {  left:500px; top: 0px; opacity:0.01;  }
+}
+
+button {
+    //position:absolute;
+    top:100px;}
+
+#text {
+    background-color:white;
+    position:relative;
+    display:block;
+    top:300px;
+    height:100px;
+    width:100px;
+}
+</style>
+<script type="text/javascript" src="../js/games.js"></script>
+
+
+
+
+<script type="text/javascript">
+window.onload= function(){
+    
+    //END OF ONLOAD*/
+}
+    // Use to retrieve the keyframe rules CHECK!!!!
+    function findKeyframesRule(rule){
+        var ss = document.styleSheets;
+        for(var i = 0; i < ss.length; i++){
+            for(var j = 0; j < ss[i].cssRules.length; j++){
+                if(ss[i].cssRules[j].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE && ss[i].cssRules[j].name == rule){
+                    return ss[i].cssRules[j];
+                }
+            }
+        }
+        return null;
+    }
+
+    //create keyframes object
+    keyframes = findKeyframesRule("scrollRight");
+    console.log(keyframes);
+    
+    //length of keyframes.cssRules
+    var kLength = keyframes.cssRules.length;
+    console.log(kLength);
+    
+    //keyframes in 0%, 50%, 100% needed for deleteRules
+    keyframeString = [];
+    for(var i = 0;i < kLength; i++){
+        keyframeString.push(keyframes[i].keyText);
+    }
+    console.log(keyframeString);
+    
+    //maybe have this just do the animation changing and have a separate callback function
+    function changeAnimation(divId){
+    for(var i = 0;i < kLength; i++){
+            keyframes.deleteRule(keyframeString[i]);
+        }
+        keyframes.insertRule("0% { left: 125px; opacity:1;}");
+        keyframes.insertRule("50% { left: 312.5px; opacity:.5;}");
+        keyframes.insertRule("100% { left: 500px; opacity:.01;}");
+        var e = document.getElementById(divId);
+        e.style.webkitAnimationName = "scrollRight";
+        e.style.display = "none";
+        //playAnimation();
+    }
+    
+    //use this to start it
+    function secondAnimation(){
+        //temporary test to see if PictureBox display=block and animation setter
+        //document.getElementById("greenPictureBox").style.display= "block";
+        //var e = document.getElementById("greenPictureBox");
+        //e.style.webkitAnimationName = "none";
+        changeAnimation("greenPictureBox");
+        setTimeout(play, 1);
+    }
+    
+    function start(){
+        document.removeEventListener('webkitAnimationStart', start, false);
+        //setTimeout("startChange()", 600);
+    }
+    
+    function restartAnimation(divId){
+
+            for(var i = 0;i < kLength; i++){
+            keyframes.deleteRule(keyframeString[i]);
+        }
+        keyframes.insertRule("0% { left: -250px; opacity:0.01;}");
+        keyframes.insertRule("50% { left: -62.5px; opacity:.5;}");
+        keyframes.insertRule("100% { left: 125px; opacity:1;}");
+        var e = document.getElementById(divId);
+        
+        e.style.WebkitAnimationName = "scrollRight";
+        //e.style.WebkitAnimationPlayState= "running";
+        //e.style.left = "-250px";
+        e.style.display = "none";
+        
+    }
+    
+    function restart(){
+    var rDiv = pickDivision();
+    restartAnimation(rDiv);
+    setTimeout(play, 0);
+    }
+    
+    function addListener(){
+        document.addEventListener('webkitAnimationEnd', restartAnimation, false);
+    }
+    
+    //array of strings containing Ids of the picturebox divs
+    var picDivs = new Array("greenPictureBox", "yellowPictureBox", "redPictureBox");
+    
+    // Picks a div randomly to show
+    function pickDivision(){
+        var num = Math.floor(Math.random() * 3);
+        //return num;
+        var randomDiv = picDivs[num];
+        return randomDiv;
+    }
+    
+
+    //REMOVES THE CURRENT RULES OF THE SPECIFIED ANIMATION!!! MAKING KEYS UNDEFINED AFTER RUN. 
+    //for(var i = 0, j = keyframeString.length; i < j; i++){
+    //    keyframes.deleteRule(keyframeString[i]);
+    //}
+/*
+    keyframes.insertRule("0% {left:0px;top:200px;opacity:0.01; }");
+    keyframes.insertRule("50% {left:250px;top:200px;opacity:1; }");
+    keyframes.insertRule("100% {left:500px;top:200px;opacity:0.01; }"); */
+    
+    
+//!!!!!!!!!!!!!!!!!TESTER FUNCTIONS!!!TESTER FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
+    function play(){
+        var rDiv = pickDivision();
+        document.getElementById(rDiv).style.display= "block";
+        playAnimation(rDiv);
+    }
+    
+    function pause(){
+        pauseAnimation("greenPictureBox");
+    }
+    
+
+    
+    //document.addEventListener('webkitAnimationEnd', restart(), false);
+    
+
+</script>
+<title>Games</title>
+
+</head>
+<body>
+
+
+ <h1>Games</h1>
+ <p>Skateboarding is mentally strenuous too! These games will get your brain in tip-top condition!</p>
+ <label>animation play state = playing</label><button onClick="play()">PlayAnimation</button>
+ <label>animation play state = paused</label><button onclick="pause()">PauseAnimation</button>
+ <p>Accomplished by deleting name, deleting rules, add rules add name.</p>
+ <label>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</label><button onclick="secondAnimation()">Second Animation</button>
+ 
+ <label>remove listener, <del>run start change</del></label><button onclick="start()">start</button>
+ <label>add listener for webkitAnimationStart</label><button onclick="addListener()">AddListener</button>
+ 
+ <button onclick="console.log(navigator)">Log Browser Info</button>
+ <p>delete rules, addrules, style.animation = scrollRight, playstate=running</p><button onclick="restart()">Restart Animation</button>
+ <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
+<div id="parentWindow">
+ <div id="container">
+  <div id="redPictureBox" >
+  </div>
+  <div id="yellowPictureBox" >
+  </div>
+  <div id="greenPictureBox" >
+  </div>
+ </div>
+
+ <p id="text"></p>
+</div>
+
+</body>
+</html>

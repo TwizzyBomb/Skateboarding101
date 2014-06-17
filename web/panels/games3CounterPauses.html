@@ -1,0 +1,297 @@
+<html>
+<head>
+
+<style type="text/css">
+body {background-image:url(../images/transparentYellowPanel.png);
+background-color:transparent;
+background-size:100% 100%;
+background-repeat:no-repeat;
+background-position:50%50%;
+overflow-y:hidden;
+overflow-x:hidden;
+}
+
+div#parentWindow{
+    width:100%;
+    height:100%;
+}
+div#container
+{
+display:block;
+text-align:center;
+margin:0 auto;
+top:0px;
+//left:0px;
+
+width:400px;
+height:400px;
+
+overflow-x:hidden;
+background-color:transparent;
+border:2px solid black;
+}
+
+
+#pictureBox 
+{   
+    position:relative;
+    display:block;
+    background-color:blue;
+    background-image:url('../images/RedCircle.png');
+    background-position:center;
+    //left:0px;
+    //top:600px;
+    width:250px;
+    height:250px;
+    
+    -webkit-animation-name: scrollRight;
+    -webkit-animation-duration: 4s;
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-play-state: paused;
+    /*standard syntax*/
+    animation-name: scrollRight;
+    animation-duration: 4s;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+
+}
+/* Chrome, Saffari, Operal */
+@-webkit-keyframes scrollRight
+{
+/*what it does during the animations*/
+    0% {left:0px;top:0px;opacity:0.01; }
+    50% {left:125px;top:0px;opacity:1;}
+    100% {left:250px;top:0px;opacity:0.01;}
+}
+/*standard or IE */
+@keyframes scrollRight
+{
+/*what it does during the animations*/
+    0% {left:0px;top:0px;opacity:0.01; }
+    50% {left:125px;top:0px;opacity:1;}
+    100% {left:250px;top:0px;opacity:0.01;}
+}
+
+@-webkit-keyframes scrollRightFurther
+{
+/*what it does during the animations*/
+    0% {  left:00px; top: 0px; opacity:1; }
+    100%   {  left:500px; top: 0px; opacity:0.01;  }
+}
+/*standard or IE */
+@keyframes scrollRightFurther
+{/*what it does during the animations*/
+    0% {  left:00px; top: 0px; opacity:0.1; }
+    100%   {  left:500px; top: 0px; opacity:0.01;  }
+}
+
+button {
+    //position:absolute;
+    top:100px;}
+
+#text {
+    background-color:white;
+    position:relative;
+    display:block;
+    top:300px;
+    height:100px;
+    width:100px;
+}
+</style>
+<script type="text/javascript" src="../js/games.js"></script>
+
+
+
+
+<script type="text/javascript">
+var circle = document.getElementById("pictureBox");
+// Current percentage of animation complete
+var totalCurrentPercent;
+// Percent in reference to latest origin
+var currentPercent;
+var result;
+    
+window.onload= function(){
+    // Gets element to show current percentage
+    result = document.getElementById("text");
+    /*Percentage of animation completed
+    var showPercent = window.setInterval(function() {
+        if(currentPercent < 100){
+            currentPercent+=1;
+        }else{
+            currentPercent=0;
+        }
+        //Updates a div that displays the current percent
+        result.innerHTML = currentPercent;
+    }, 20); 
+    //END OF ONLOAD*/
+}   
+
+    // Use to retrieve the keyframe rules CHECK!!!!
+    function findKeyframesRule(rule){
+        var ss = document.styleSheets;
+        for(var i = 0; i < ss.length; i++){
+            for(var j = 0; j < ss[i].cssRules.length; j++){
+                if(ss[i].cssRules[j].type == window.CSSRule.WEBKIT_KEYFRAMES_RULE && ss[i].cssRules[j].name == rule){
+                    return ss[i].cssRules[j];
+                }
+            }
+        }
+        return null;
+    }
+
+    //create keyframes object
+    var keyframes = findKeyframesRule("scrollRight");
+    //length of keyframes.cssRules
+    var kLength = keyframes.cssRules.length;
+    
+    // Makes an array of the current percent values in the animation
+    var keyframeString = [];
+    for(var i = 0;i < kLength; i++){
+        keyframeString.push(keyframes[i].keyText);
+    }
+    //Whole Object
+    console.log(keyframes);
+    //The Array values
+    console.log(keyframeString);
+    
+    //Removes all the % values from the array so the getClosest function can perform calculations
+    var keys = keyframeString.map(function(str){
+        return str.replace('%', '');
+    });
+    //Keys will be an array of the animation's keyframes in numerical format.
+    console.log("keys = "+ keys);
+    
+    //updates the current position of animation for all calculations
+    //totalCurrentPercent += currentPercent;
+    // Since it's in percent it shouldn't ever be over 100
+    /*if(totalCurrentPercent > 100){
+        totalCurrentPercent -= 100;
+    }
+    */
+    totalCurrentPercent = 25;
+    //gets the current keyframe most closely rounded
+    console.log("totalCurrentPercent = " + totalCurrentPercent);
+    console.log("getClosest = " + getClosest(keys, totalCurrentPercent));
+    //self explainatory variables if you read the description of getClosest
+    var closest = getClosest(keys, totalCurrentPercent);
+    
+    var position = keys.indexOf(closest), firstPercent = keys[position];
+    console.log("firstPercent = " + firstPercent);
+    //NOW WE HAVE THE RETURNED ANIMATION PERCENTS, NOW TO COMPARE WITH A TIMER TO INDICATE HOW FAR ALONG ITS COME
+    
+    function intervalMan(){
+      var run = 0;
+      var ran = 1;
+
+      window.setInterval(intervalMan, 80);
+      
+      if(run==ran){
+          currentPercent++;
+          run = 0;
+          //clearInterval();
+          alert("currentPercent = " + currentPercent);
+          alert("Run = " + run);
+      }
+      if(currentPercent == firstPercent)
+      {
+        pauseAnimation();
+        clearInterval();
+        run=1;//first time run = 1, clears adds one to currentPercent continues?
+      }
+      else if(currentPercent < 100)
+      {
+        currentPercent += 1;
+      }
+      else
+      {
+        currentPercent = 0;
+      }
+      result.innerHTML = currentPercent;
+
+    }
+    
+    // REMOVES THE CURRENT RULES OF THE SPECIFIED ANIMATION!!! MAKING KEYS UNDEFINED AFTER RUN. 
+    //for(var i = 0, j = keyframeString.length; i < j; i++){
+    //    keyframes.deleteRule(keyframeString[i]);
+    //}
+/*
+    keyframes.insertRule("0% {left:0px;top:200px;opacity:0.01; }");
+    keyframes.insertRule("50% {left:250px;top:200px;opacity:1; }");
+    keyframes.insertRule("100% {left:500px;top:200px;opacity:0.01; }"); */
+    
+    function getClosest(keyframeArray, comparisonFrame){
+        var val = 0;
+        //curr stands for current keyframe
+        var curr = keyframeArray[val];
+        var next = keyframeArray[val+1]
+        var diff = Math.abs(comparisonFrame - curr);//25-0=|25|
+        var diff2 = Math.abs(comparisonFrame - next);//25-50=|25|
+        //diff is closer
+        if(diff2 > diff){
+            curr = keyframeArray[val];//RoundDown
+        }
+        //diff2 is closer
+        if(diff > diff2){
+            curr = keyframeArray[val+1];//RoundUp
+        }
+        if(diff==diff2){
+            curr = keyframeArray[val+1];//RoundUP
+        }
+        return curr;
+    }
+
+//!!!!!!!!!!!!!!!!!TESTER FUNCTIONS!!!TESTER FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
+
+    function test(){
+        var sheet = document.styleSheets[0];
+        //sheet.deleteRule("#pictureBox", 6);
+        var item = sheet.cssRules[0].name;
+        sheet.insertRule("#pictureBox {width = 350}", 3);
+        var width2 = getWidth("pictureBox");
+        alert(cssRules[1] + " = cssRules[1], width of pictureBox = " + width2);
+    }
+    
+    console.log("keys[1] = " + keys[1]);
+    
+    function test2(){
+    // Gets element to show current percentage
+    var result = document.getElementById("text");
+    //Percentage of animation completed
+    var showPercent = window.setInterval(function() {
+        if(currentPercent < 100){
+            currentPercent+=1;
+        }else{
+            currentPercent=0;
+        }
+        //Updates a div that displays the current percent
+        result.innerHTML = currentPercent;
+    }, 80); 
+        playAnimation();
+    }
+
+</script>
+<title>Games</title>
+
+</head>
+<body>
+
+
+ <h1>Games</h1>
+ <p>Skateboarding is mentally strenuous too! These games will get your brain in tip-top condition!</p>
+ <button onClick="playAnimation();intervalMan()">Play</button>
+ <button onclick="">test</button>
+ <button onclick="pauseAnimation();clearInterval()">Pause</button>
+<div id="parentWindow">
+ <div id="container">
+  <div id="pictureBox" >
+  </div>
+ </div>
+
+ <p id="text"></p>
+</div>
+
+</body>
+</html>

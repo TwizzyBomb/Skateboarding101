@@ -1,0 +1,27 @@
+.tab{
+color: navy;
+height: 55px;
+position: absolute;
+text-align: center;
+font: 9pt Verdana,sans-serif;
+z-index: 2;
+cursor: pointer;
+cursor: hand;
+}
+.panel{
+display: none;
+position: absolute;
+top: 132;
+left: 7%;
+width: 85%;
+text-align: center;
+margin-left:auto;
+margin-right:auto;
+z-index: 1;
+height: 80%;
+visibility: hidden;
+font: 12pt Verdana,sans-serif;
+color: navy;
+border: thin black outset;
+padding: 0;
+}
