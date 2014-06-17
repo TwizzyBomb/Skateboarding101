@@ -44,6 +44,7 @@
         }
     
     function playAnimation(id){
+        //document.getElementById(id).style.display= "block";
         document.getElementById(id).style.animationPlayState="running";
         document.getElementById(id).style.WebkitAnimationPlayState="running";
         //chrome and safari

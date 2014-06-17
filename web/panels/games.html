@@ -31,11 +31,10 @@ background-color:transparent;
 border:2px solid black;
 }
 
-//red
 #redPictureBox
 {   
     position:relative;
-    display:block;
+    display:none;
     background-color:blue;
     background-image:url('../images/RedCircle.png');
     background-position:center;
@@ -168,7 +167,7 @@ window.onload= function(){
     
     //END OF ONLOAD*/
 }
-    // Use to retrieve the keyframe rules CHECK!!!!
+    // Use to retrieve the currently existing keyframe rules CHECK!!!!
     function findKeyframesRule(rule){
         var ss = document.styleSheets;
         for(var i = 0; i < ss.length; i++){
@@ -196,66 +195,9 @@ window.onload= function(){
     }
     console.log(keyframeString);
     
-    //maybe have this just do the animation changing and have a separate callback function
-    function changeAnimation(divId){
-    for(var i = 0;i < kLength; i++){
-            keyframes.deleteRule(keyframeString[i]);
-        }
-        keyframes.insertRule("0% { left: 125px; opacity:1;}");
-        keyframes.insertRule("50% { left: 312.5px; opacity:.5;}");
-        keyframes.insertRule("100% { left: 500px; opacity:.01;}");
-        var e = document.getElementById(divId);
-        e.style.webkitAnimationName = "scrollRight";
-        e.style.display = "none";
-        //playAnimation();
-    }
-    
-    //use this to start it
-    function secondAnimation(){
-        //temporary test to see if PictureBox display=block and animation setter
-        //document.getElementById("greenPictureBox").style.display= "block";
-        //var e = document.getElementById("greenPictureBox");
-        //e.style.webkitAnimationName = "none";
-        changeAnimation("greenPictureBox");
-        setTimeout(play, 1);
-    }
-    
-    function start(){
-        document.removeEventListener('webkitAnimationStart', start, false);
-        //setTimeout("startChange()", 600);
-    }
-    
-    function restartAnimation(divId){
-
-            for(var i = 0;i < kLength; i++){
-            keyframes.deleteRule(keyframeString[i]);
-        }
-        keyframes.insertRule("0% { left: -250px; opacity:0.01;}");
-        keyframes.insertRule("50% { left: -62.5px; opacity:.5;}");
-        keyframes.insertRule("100% { left: 125px; opacity:1;}");
-        var e = document.getElementById(divId);
-        
-        e.style.WebkitAnimationName = "scrollRight";
-        //e.style.WebkitAnimationPlayState= "running";
-        //e.style.left = "-250px";
-        e.style.display = "none";
-        
-    }
-    
-    function restart(){
-    var rDiv = pickDivision();
-    restartAnimation(rDiv);
-    setTimeout(play, 0);
-    }
-    
-    function addListener(){
-        document.addEventListener('webkitAnimationEnd', restartAnimation, false);
-    }
-    
-    //array of strings containing Ids of the picturebox divs
+    // Array of strings containing Ids of the picturebox divs
     var picDivs = new Array("greenPictureBox", "yellowPictureBox", "redPictureBox");
-    
-    // Picks a div randomly to show
+    // Picks a div randomly to show. A new random will spawn everytime pickDivision() is called.
     function pickDivision(){
         var num = Math.floor(Math.random() * 3);
         //return num;
@@ -263,52 +205,98 @@ window.onload= function(){
         return randomDiv;
     }
     
-
-    //REMOVES THE CURRENT RULES OF THE SPECIFIED ANIMATION!!! MAKING KEYS UNDEFINED AFTER RUN. 
-    //for(var i = 0, j = keyframeString.length; i < j; i++){
-    //    keyframes.deleteRule(keyframeString[i]);
-    //}
-/*
-    keyframes.insertRule("0% {left:0px;top:200px;opacity:0.01; }");
-    keyframes.insertRule("50% {left:250px;top:200px;opacity:1; }");
-    keyframes.insertRule("100% {left:500px;top:200px;opacity:0.01; }"); */
+    // MEAT N POTATOS
+    
+    function restartAnimation(divId){
+        // Deletes current keyframe rules
+        for(var i = 0;i < kLength; i++){
+            keyframes.deleteRule(keyframeString[i]);
+        }
+        // Insert new keyframe rules
+        keyframes.insertRule("0% { left: -250px; opacity:0.01;}");
+        keyframes.insertRule("50% { left: -62.5px; opacity:.5;}");
+        keyframes.insertRule("100% { left: 125px; opacity:1;}");
+        var e = document.getElementById(divId);
+        
+        e.style.WebkitAnimationName = "scrollRight";
+        e.style.display = "none";
+    }
+    
+    // Have this just do the animation changing and have a separate callback function
+    function changeAnimation(divId){
+        for(var i = 0;i < kLength; i++){
+            keyframes.deleteRule(keyframeString[i]);
+        }
+        // Insert new keyframe rules
+        keyframes.insertRule("0% { left: 125px; opacity:1;}");
+        keyframes.insertRule("50% { left: 312.5px; opacity:.5;}");
+        keyframes.insertRule("100% { left: 500px; opacity:.01;}");
+        var e = document.getElementById(divId);
+        
+        e.style.webkitAnimationName = "scrollRight";
+        e.style.display = "none";//isn't setting for some reason
+    }
+    
+    // (Re)Starts the Animation
+    function restart(){
+    rDiv = pickDivision();
+    restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
+    setTimeout(play(rDiv), 1);//set rDiv in play? this way the variable stays the same.
+    //we also need it to stay the same for the second animation
+    
+    }
+    //
+    function secondAnimation(){
+        //var e = document.getElementById("greenPictureBox");
+        //e.style.webkitAnimationName = "none";
+        //console.log(rDiv);
+        changeAnimation("greenPictureBox");
+        //var curr = window.getComputedStyle(rDiv);
+        //console.log(curr);
+        
+        setTimeout(play(rDiv), 1);
+    }
     
     
-//!!!!!!!!!!!!!!!!!TESTER FUNCTIONS!!!TESTER FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
-    function play(){
-        var rDiv = pickDivision();
-        document.getElementById(rDiv).style.display= "block";
+//!!!!!!!!!!!!!!!!!TESTPLAY FUNCTIONS!!!TESTPLAY FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
+    function play(id){
+        //var rDiv = pickDivision();
+        document.getElementById(id).style.display= "block";//not needed? replace play with play animation in the above function
         playAnimation(rDiv);
     }
     
     function pause(){
-        pauseAnimation("greenPictureBox");
+        pauseAnimation(rDiv);
     }
     
-
+    //Add Listener functions from tutorials solution
+    function start(){
+        document.removeEventListener('webkitAnimationStart', start, false);
+        //setTimeout("startChange()", 600);
+    }
     
-    //document.addEventListener('webkitAnimationEnd', restart(), false);
+    function addListener(){
+        document.addEventListener('webkitAnimationEnd', restartAnimation, false);
+    }
     
-
 </script>
 <title>Games</title>
 
 </head>
 <body>
 
-
+<!--
  <h1>Games</h1>
  <p>Skateboarding is mentally strenuous too! These games will get your brain in tip-top condition!</p>
  <label>animation play state = playing</label><button onClick="play()">PlayAnimation</button>
  <label>animation play state = paused</label><button onclick="pause()">PauseAnimation</button>
- <p>Accomplished by deleting name, deleting rules, add rules add name.</p>
- <label>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</label><button onclick="secondAnimation()">Second Animation</button>
- 
- <label>remove listener, <del>run start change</del></label><button onclick="start()">start</button>
- <label>add listener for webkitAnimationStart</label><button onclick="addListener()">AddListener</button>
- 
+ <p>Accomplished by deleting name, deleting rules, add rules add name. Like this:</p>
+ <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
+ -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
  <p>delete rules, addrules, style.animation = scrollRight, playstate=running</p><button onclick="restart()">Restart Animation</button>
+ <button onclick="secondAnimation()">Second Animation</button>
+ 
  <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
 <div id="parentWindow">
  <div id="container">
