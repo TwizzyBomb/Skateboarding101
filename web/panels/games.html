@@ -198,11 +198,11 @@ window.onload= function(){
     // Array of strings containing Ids of the picturebox divs
     var picDivs = new Array("greenPictureBox", "yellowPictureBox", "redPictureBox");
     // Picks a div randomly to show. A new random will spawn everytime pickDivision() is called.
-    function pickDivision(){
+    function pickDivision(theObject){
         var num = Math.floor(Math.random() * 3);
         //return num;
-        var randomDiv = picDivs[num];
-        return randomDiv;
+        theObject.identification = picDivs[num];
+        //return randomDiv;
     }
     
     // MEAT N POTATOS
@@ -220,6 +220,20 @@ window.onload= function(){
         
         e.style.WebkitAnimationName = "scrollRight";
         e.style.display = "none";
+        console.log(keyframes);
+    }
+
+    
+    var rDiv = {identification:"greenPictureBox"};
+    
+    // (Re)Starts the Animation
+    function restart(){
+    //pickDivision(rDiv.identification);
+    restartAnimation(rDiv.identification);//I need this function to set the id with math.random and keep the variable live:
+    document.getElementById(rDiv.identification).style.display= "block";
+    setTimeout(play(rDiv.identification), 1);//set rDiv in play? this way the variable stays the same.
+    //we also need it to stay the same for the second animation
+    
     }
     
     // Have this just do the animation changing and have a separate callback function
@@ -227,42 +241,36 @@ window.onload= function(){
         for(var i = 0;i < kLength; i++){
             keyframes.deleteRule(keyframeString[i]);
         }
+        console.log(keyframes);
         // Insert new keyframe rules
         keyframes.insertRule("0% { left: 125px; opacity:1;}");
         keyframes.insertRule("50% { left: 312.5px; opacity:.5;}");
         keyframes.insertRule("100% { left: 500px; opacity:.01;}");
+        console.log(keyframes);
         var e = document.getElementById(divId);
         
         e.style.webkitAnimationName = "scrollRight";
         e.style.display = "none";//isn't setting for some reason
     }
     
-    // (Re)Starts the Animation
-    function restart(){
-    rDiv = pickDivision();
-    restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
-    setTimeout(play(rDiv), 1);//set rDiv in play? this way the variable stays the same.
-    //we also need it to stay the same for the second animation
-    
-    }
-    //
     function secondAnimation(){
-        //var e = document.getElementById("greenPictureBox");
-        //e.style.webkitAnimationName = "none";
-        //console.log(rDiv);
+        var e = document.getElementById("greenPictureBox");
+        e.style.webkitAnimationName = "none";
+        //e.style.display = "none";
+        //console.log(rDiv.identification);
         changeAnimation("greenPictureBox");
         //var curr = window.getComputedStyle(rDiv);
         //console.log(curr);
-        
-        setTimeout(play(rDiv), 1);
+        document.getElementById("greenPictureBox").style.display= "block";
+        setTimeout(play("greenPictureBox"), 1);
     }
     
     
 //!!!!!!!!!!!!!!!!!TESTPLAY FUNCTIONS!!!TESTPLAY FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
     function play(id){
         //var rDiv = pickDivision();
-        document.getElementById(id).style.display= "block";//not needed? replace play with play animation in the above function
-        playAnimation(rDiv);
+        //document.getElementById(id).style.display= "block";//not needed? replace play with play animation in the above function
+        playAnimation(id);
     }
     
     function pause(){
@@ -294,7 +302,7 @@ window.onload= function(){
  <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
- <p>delete rules, addrules, style.animation = scrollRight, playstate=running</p><button onclick="restart()">Restart Animation</button>
+ <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart()">Restart Animation</button>
  <button onclick="secondAnimation()">Second Animation</button>
  
  <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
