@@ -163,8 +163,9 @@ button {
 
 
 <script type="text/javascript">
-window.onload= function(){
-    
+var counter;
+window.onload=function () {
+    counter = 1;
     //END OF ONLOAD*/
 }
     // Use to retrieve the currently existing keyframe rules CHECK!!!!
@@ -198,17 +199,56 @@ window.onload= function(){
     // Array of strings containing Ids of the picturebox divs
     var picDivs = new Array("greenPictureBox", "yellowPictureBox", "redPictureBox");
     // Picks a div randomly to show. A new random will spawn everytime pickDivision() is called.
-    function pickDivision(theObject){
+    function pickDivision(){
         var num = Math.floor(Math.random() * 3);
         //return num;
-        theObject.identification = picDivs[num];
-        //return randomDiv;
+        //theObject.identification = picDivs[num];
+        var randomDiv = picDivs[num];
+        return randomDiv;
     }
     
     // MEAT N POTATOS
+    var rDiv = pickDivision();
+    console.log(rDiv);
+    
+    //Used in the next function to compare strings
+    var one = "";
+    var two = "";
+    
+    function compareAndConquer(){
+
+        yesNo = false;
+        console.log("Start " + counter);
+        if(counter==1){
+            one = rDiv.toString();
+            //console.log("value of one " + one);
+            counter++;
+            //console.log("after one counter = " + counter);
+            //console.log(typeof one);
+        }else if(counter==2){
+            two = rDiv.toString();
+            //console.log("value of two " + two);
+            counter=1;
+            //console.log(typeof one);
+            //console.log("after two counter = " + counter);
+        }
+        //var num = doesAequalB(one, two);
+        //console.log("num equals " + num);
+        console.log("one = " + one + ", Two = " + two);
+        
+        if(one.localeCompare(two)===0){
+            yesNo = true;
+        }
+        console.log(yesNo);
+        return yesNo;
+    }
+
+    
     
     function restartAnimation(divId){
         // Deletes current keyframe rules
+        rDiv = pickDivision();
+        //console.log(rDiv);
         for(var i = 0;i < kLength; i++){
             keyframes.deleteRule(keyframeString[i]);
         }
@@ -220,56 +260,54 @@ window.onload= function(){
         
         e.style.WebkitAnimationName = "scrollRight";
         e.style.display = "none";
-        console.log(keyframes);
+        //console.log(keyframes);
     }
-
-    
-    var rDiv = {identification:"greenPictureBox"};
     
     // (Re)Starts the Animation
     function restart(){
-    //pickDivision(rDiv.identification);
-    restartAnimation(rDiv.identification);//I need this function to set the id with math.random and keep the variable live:
-    document.getElementById(rDiv.identification).style.display= "block";
-    setTimeout(play(rDiv.identification), 1);//set rDiv in play? this way the variable stays the same.
+    pickDivision(rDiv);
+    restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
+    //document.getElementById(rDiv.identification).style.display= "block";
+    //NEEDS TO BE SET TIMEOUT IN THIS FORMAT TO ALLOW PARAMETERS ON PLAY!!!!!!!!!!!
+    setTimeout(function(){play(rDiv);}, 0);//set rDiv in play? this way the variable stays the same.
     //we also need it to stay the same for the second animation
     
     }
     
-    // Have this just do the animation changing and have a separate callback function
     function changeAnimation(divId){
         for(var i = 0;i < kLength; i++){
             keyframes.deleteRule(keyframeString[i]);
         }
-        console.log(keyframes);
+        
         // Insert new keyframe rules
         keyframes.insertRule("0% { left: 125px; opacity:1;}");
         keyframes.insertRule("50% { left: 312.5px; opacity:.5;}");
         keyframes.insertRule("100% { left: 500px; opacity:.01;}");
-        console.log(keyframes);
+        //console.log(keyframes);
         var e = document.getElementById(divId);
         
         e.style.webkitAnimationName = "scrollRight";
-        e.style.display = "none";//isn't setting for some reason
+        e.style.display = "none";
     }
-    
+    //BUTTON2
     function secondAnimation(){
-        var e = document.getElementById("greenPictureBox");
+        var e = document.getElementById(rDiv);
         e.style.webkitAnimationName = "none";
         //e.style.display = "none";
         //console.log(rDiv.identification);
-        changeAnimation("greenPictureBox");
+        changeAnimation(rDiv);
         //var curr = window.getComputedStyle(rDiv);
-        //console.log(curr);
-        document.getElementById("greenPictureBox").style.display= "block";
-        setTimeout(play("greenPictureBox"), 1);
+        console.log(rDiv);
+        //e.style.display= "block";
+        //NEEDS TO BE SET TIMEOUT IN THIS FORMAT TO ALLOW PARAMETERS ON PLAY!!!!!!!!!!!
+        setTimeout(function(){play(rDiv);}, 1);
     }
     
     
 //!!!!!!!!!!!!!!!!!TESTPLAY FUNCTIONS!!!TESTPLAY FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
     function play(id){
         //var rDiv = pickDivision();
-        //document.getElementById(id).style.display= "block";//not needed? replace play with play animation in the above function
+        document.getElementById(id).style.display= "block";//NESSESARY BUT WHYYYY
         playAnimation(id);
     }
     
@@ -295,14 +333,14 @@ window.onload= function(){
 
 <!--
  <h1>Games</h1>
- <p>Skateboarding is mentally strenuous too! These games will get your brain in tip-top condition!</p>
+ <p>Skateboarding is mentally strenuous too! These games will get your brain in tip-top condition!</p>ta
  <label>animation play state = playing</label><button onClick="play()">PlayAnimation</button>
  <label>animation play state = paused</label><button onclick="pause()">PauseAnimation</button>
  <p>Accomplished by deleting name, deleting rules, add rules add name. Like this:</p>
  <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
- <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart()">Restart Animation</button>
+ <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart(),compareAndConquer()">Restart Animation</button>
  <button onclick="secondAnimation()">Second Animation</button>
  
  <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
