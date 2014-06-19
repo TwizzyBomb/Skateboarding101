@@ -67,3 +67,12 @@
         //^^Maybe using shorthand maybe not? There might be an animation generator online.
     }
 
+    function doesAequalB(a, b){
+        var boo;
+        if(a===b){
+            boo = 1;
+        }else{
+            boo = 0;
+        }
+        return boo;
+    }
