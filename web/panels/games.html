@@ -31,6 +31,34 @@ background-color:transparent;
 border:2px solid black;
 }
 
+#arrows {
+    display:block;
+    text-align:center;
+    margin:0 auto;
+    top:0px;
+    border:2px solid black;
+    width:310px;
+}
+
+#leftArrow {
+    display:block;
+    position:relative;
+    top:0;
+    background-image:url('../images/LeftArrow.png');
+}
+#leftArrow:hover {
+   background: url('../images/LeftArrowPlastic.png') center center no-repeat;
+}
+#rightArrow {
+    display:block;
+    position:relative;
+    top:0;
+    background-image:url('../images/RightArrow.png');
+}
+#rightArrow:hover {
+   background: url('../images/RightArrowPlastic.png') center center no-repeat;
+}
+
 #redPictureBox
 {   
     position:relative;
@@ -152,10 +180,12 @@ button {
     background-color:white;
     position:relative;
     display:block;
-    top:300px;
-    height:100px;
-    width:100px;
+    margin-bottom:0px;
+    //height:100px;
+    //width:100px;
 }
+
+
 </style>
 <script type="text/javascript" src="../js/games.js"></script>
 
@@ -352,9 +382,15 @@ window.onload=function () {
   </div>
   <div id="greenPictureBox" >
   </div>
+     <p id="text">Right! / Wrong =(</p>
  </div>
-
- <p id="text"></p>
+ <div id="arrows">
+  <table>
+      <tr>
+          <td><span id="leftArrow" style="height:113px;width:151px;"></span></td><td><span id="rightArrow" style="height:113px;width:151px;"></span></td>
+      </tr>
+  </table>
+ </div>
 </div>
 
 </body>
