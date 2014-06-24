@@ -272,10 +272,32 @@ window.onload=function () {
             yesNo = true;
         }
         console.log(yesNo);
+        //var dv = document.getElementById("text");
+        //dv.innerHTML=yesNo;
         return yesNo;
     }
-
     
+    function rightArrow(tf){
+        tf = yesNo;
+    var dv = document.getElementById("text");
+        if(tf===true){
+            dv.innerHTML="RIGHT!";
+        }
+        if(tf===false){
+            dv.innerHTML="WRONG";
+        }
+    }
+    
+    function leftArrow(tf){
+        tf = yesNo;
+        var dv = document.getElementById("text");
+        if(tf===false){
+            dv.innerHTML="RIGHT!";
+        }
+        if(tf===true){
+            dv.innerHTML="WRONG =(";
+        }    
+    }
     
     function restartAnimation(divId){
         // Deletes current keyframe rules
@@ -302,7 +324,7 @@ window.onload=function () {
     //document.getElementById(rDiv.identification).style.display= "block";
     //NEEDS TO BE SET TIMEOUT IN THIS FORMAT TO ALLOW PARAMETERS ON PLAY!!!!!!!!!!!
     setTimeout(function(){play(rDiv);}, 0);//set rDiv in play? this way the variable stays the same.
-    //we also need it to stay the same for the second animation
+    compareAndConquer();
     
     }
     
@@ -357,12 +379,12 @@ window.onload=function () {
         document.addEventListener('webkitAnimationEnd', restartAnimation, false);
     }
     
+    //seems to assign true every time?
     function truthTester(){
-        var bool = compareAndConquer();
-        if(bool===true){
-            alert(bool);
-        }
+        //var bool = compareAndConquer();
+        //console.log(bool);
     }
+    
 </script>
 <title>Games</title>
 
@@ -378,7 +400,7 @@ window.onload=function () {
  <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
- <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart(),compareAndConquer()">Restart Animation</button>
+ <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart()">Restart Animation</button>
  <button onclick="secondAnimation()">Second Animation</button>
  
  <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
@@ -395,7 +417,7 @@ window.onload=function () {
  <div id="arrows">
   <table>
       <tr>
-          <td><span id="leftArrow" style="height:113px;width:151px;"></span></td><td><span id="rightArrow" style="height:113px;width:151px;"></span></td>
+          <td><span id="leftArrow" style="height:113px;width:151px;" onClick="leftArrow(),restart()"></span></td><td><span id="rightArrow" style="height:113px;width:151px;" onClick="rightArrow(),restart()"></span></td>
       </tr>
   </table>
  </div>
