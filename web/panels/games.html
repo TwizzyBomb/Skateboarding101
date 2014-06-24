@@ -185,6 +185,15 @@ button {
     //width:100px;
 }
 
+#timer {
+    position:absolute;
+    background-color:white;
+    left:310px;
+    top:300px;
+    width:100px;
+    height:100px;
+}
+
 
 </style>
 <script type="text/javascript" src="../js/games.js"></script>
@@ -237,6 +246,21 @@ window.onload=function () {
         return randomDiv;
     }
     
+    var myTime = setInterval(function(){increment()}, 1000);
+    var t = 0;
+    function increment(){
+        
+        while(t<46){
+        setInterval(function(){increment()}, 1000);
+        t++;
+        document.getElementById("timer").innerHTML=t;}
+    }
+    function timer(){
+        var d = new Date();
+        var t = d.toLocaleTimeString();
+        //document.getElementById("timer").innerHTML=t;
+    }
+    
     // MEAT N POTATOS
     var rDiv = pickDivision();
     console.log(rDiv);
@@ -277,26 +301,42 @@ window.onload=function () {
         return yesNo;
     }
     
+    //variable for the counter
+    var count = 0; 
     function rightArrow(tf){
         tf = yesNo;
-    var dv = document.getElementById("text");
+        var dv = document.getElementById("text");
+        var msg;
+        //var count;
         if(tf===true){
-            dv.innerHTML="RIGHT!";
+            count++;
+            msg = "RIGHT! YOU GOT " + count + " IN A ROW";
+            //dv.innerHTML="RIGHT!";
         }
         if(tf===false){
-            dv.innerHTML="WRONG";
+            count = 0;
+            msg = "FALSE";
+            //dv.innerHTML="WRONG";
         }
+        dv.innerHTML=msg;
     }
     
     function leftArrow(tf){
         tf = yesNo;
         var dv = document.getElementById("text");
+        var msg;
+        //var count;
         if(tf===false){
-            dv.innerHTML="RIGHT!";
+            count++;
+            msg = "RIGHT! YOU GOT " + count + " IN A ROW";
+            //dv.innerHTML="RIGHT!";
         }
         if(tf===true){
-            dv.innerHTML="WRONG =(";
-        }    
+            count = 0;
+            msg = "FALSE";
+            //dv.innerHTML="WRONG =(";
+        }
+        dv.innerHTML=msg;
     }
     
     function restartAnimation(divId){
@@ -318,7 +358,9 @@ window.onload=function () {
     }
     
     // (Re)Starts the Animation
+    // Add functionality to play the second animation
     function restart(){
+    //secondAnimation();
     pickDivision(rDiv);
     restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
     //document.getElementById(rDiv.identification).style.display= "block";
@@ -402,7 +444,7 @@ window.onload=function () {
  <button onclick="console.log(navigator)">Log Browser Info</button>
  <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart()">Restart Animation</button>
  <button onclick="secondAnimation()">Second Animation</button>
- 
+ <div id="timer"></div>
  <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
 <div id="parentWindow">
  <div id="container">
