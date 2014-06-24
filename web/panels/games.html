@@ -250,13 +250,15 @@ window.onload=function () {
         yesNo = false;
         console.log("Start " + counter);
         if(counter==1){
+            two = one;
             one = rDiv.toString();
             //console.log("value of one " + one);
             counter++;
             //console.log("after one counter = " + counter);
             //console.log(typeof one);
         }else if(counter==2){
-            two = rDiv.toString();
+            two = one;
+            one = rDiv.toString();
             //console.log("value of two " + two);
             counter=1;
             //console.log(typeof one);
@@ -355,6 +357,12 @@ window.onload=function () {
         document.addEventListener('webkitAnimationEnd', restartAnimation, false);
     }
     
+    function truthTester(){
+        var bool = compareAndConquer();
+        if(bool===true){
+            alert(bool);
+        }
+    }
 </script>
 <title>Games</title>
 
