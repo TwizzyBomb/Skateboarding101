@@ -260,6 +260,10 @@ window.onload=function () {
         //document.getElementById("timer").innerHTML=t;
     }
     
+    function stopTimer(){
+        clearInterval(myTime);
+    }
+    
     // MEAT N POTATOS
     var rDiv = pickDivision();
     console.log(rDiv);
@@ -300,7 +304,7 @@ window.onload=function () {
         return yesNo;
     }
     
-    //variable for the counter
+    //variable for the correct in a row counter
     var count = 0; 
     function rightArrow(tf){
         tf = yesNo;
@@ -313,9 +317,10 @@ window.onload=function () {
             //dv.innerHTML="RIGHT!";
         }
         if(tf===false){
+            msg = "FALSE! you got " + count + " Correct.";
             count = 0;
-            msg = "FALSE";
             //dv.innerHTML="WRONG";
+            stopTimer();
         }
         dv.innerHTML=msg;
     }
@@ -331,9 +336,10 @@ window.onload=function () {
             //dv.innerHTML="RIGHT!";
         }
         if(tf===true){
+            msg = "FALSE! you got " + count + " Correct.";
             count = 0;
-            msg = "FALSE";
             //dv.innerHTML="WRONG =(";
+            stopTimer();
         }
         dv.innerHTML=msg;
     }
