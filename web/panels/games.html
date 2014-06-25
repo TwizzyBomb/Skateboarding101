@@ -30,6 +30,11 @@ overflow-x:hidden;
 background-color:transparent;
 border:2px solid black;
 }
+div#buttons {
+    display:block;
+    text-align:center;
+    margin:0 auto;
+}
 
 #arrows {
     display:block;
@@ -204,7 +209,7 @@ button {
 <script type="text/javascript">
 var counter;
 window.onload=function () {
-    startTimer();
+    //startTimer();
     counter = 1;
     //END OF ONLOAD*/
 }
@@ -453,11 +458,15 @@ window.onload=function () {
  <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
- <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart()">Restart Animation</button>
- <button onclick="secondAnimation()">Second Animation</button>
+ 
  <div id="timer"></div>
- <label>alert</label><button onclick="console.log(pickDivision())">gay</button>
+ <label>alert</label><button onclick="console.log(pickDivision())">test</button>
 <div id="parentWindow">
+ <div id="buttons">
+     <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart(),startTimer()">Restart Animation</button>
+     <button onclick="secondAnimation()">Second Animation</button>
+     <button onclick="stopTimer()" >Stop Timer</button>
+ </div>
  <div id="container">
   <div id="redPictureBox" >
   </div>
