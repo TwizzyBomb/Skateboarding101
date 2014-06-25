@@ -399,7 +399,7 @@ window.onload=function () {
     // (Re)Starts the Animation
     // Add functionality to play the second animation
     function restart(){
-    //secondAnimation();
+    //changeAnimation(rDiv);
     pickDivision(rDiv);
     restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
     //document.getElementById(rDiv.identification).style.display= "block";
@@ -437,6 +437,7 @@ window.onload=function () {
         //NEEDS TO BE SET TIMEOUT IN THIS FORMAT TO ALLOW PARAMETERS ON PLAY!!!!!!!!!!!
         setTimeout(function(){play(rDiv);}, 1);
     }
+    
     
     
     
