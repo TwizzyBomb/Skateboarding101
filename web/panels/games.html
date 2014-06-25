@@ -204,6 +204,7 @@ button {
 <script type="text/javascript">
 var counter;
 window.onload=function () {
+    startTimer();
     counter = 1;
     //END OF ONLOAD*/
 }
@@ -246,8 +247,13 @@ window.onload=function () {
         return randomDiv;
     }
     
-    var myTime = setInterval(function(){increment()}, 1000);
-    var t = 0;
+    var myTime;
+    var t;
+    
+    function startTimer(){
+    myTime = setInterval(function(){increment()}, 1000);
+    t = 0;
+    }
     
     function increment(){
     t++;
