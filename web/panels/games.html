@@ -15,6 +15,11 @@ div#parentWindow{
     width:100%;
     height:100%;
 }
+#centerTbl {
+    display:block;
+    text-align:center;
+    margin:0 auto;
+}
 div#container
 {
 display:block;
@@ -191,14 +196,21 @@ button {
 }
 
 #timer {
-    position:absolute;
+    position:relative;
     background-color:white;
-    left:310px;
-    top:300px;
-    width:100px;
-    height:100px;
+    float:left;
+    width:50px;
+    height:50px;
+    margin-bottom:0px;
 }
-
+#score {
+    position:relative;
+    background-color:white;
+    float:right;
+    width:50px;
+    height:50px;
+    margin-bottom:0px;
+}
 
 </style>
 <script type="text/javascript" src="../js/games.js"></script>
@@ -325,6 +337,7 @@ window.onload=function () {
             count++;
             msg = "RIGHT! YOU GOT " + count + " IN A ROW";
             //dv.innerHTML="RIGHT!";
+            scoreKeeper();
         }
         if(tf===false){
             msg = "FALSE! you got " + count + " Correct.";
@@ -345,6 +358,7 @@ window.onload=function () {
             count++;
             msg = "RIGHT! YOU GOT " + count + " IN A ROW";
             //dv.innerHTML="RIGHT!";
+            scoreKeeper();
         }
         if(tf===true){
             msg = "FALSE! you got " + count + " Correct.";
@@ -354,6 +368,14 @@ window.onload=function () {
         }
         dv.innerHTML=msg;
         secondAnimation();
+    }
+    var totalScore = 0;
+    function scoreKeeper(){
+        var score;
+        var dv = document.getElementById("score");
+        score = count * 10;
+        totalScore += score;
+        dv.innerHTML=totalScore;
     }
     
     function restartAnimation(divId){
@@ -417,6 +439,7 @@ window.onload=function () {
     }
     
     
+    
 //!!!!!!!!!!!!!!!!!TESTPLAY FUNCTIONS!!!TESTPLAY FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
     function play(id){
         //var rDiv = pickDivision();
@@ -461,14 +484,19 @@ window.onload=function () {
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
  
- <div id="timer"></div>
+ 
  <label>alert</label><button onclick="console.log(pickDivision())">test</button>
 <div id="parentWindow">
  <div id="buttons">
-     <p></p><button onclick="restart(),startTimer()">Restart Animation</button>
+     <p></p><button onclick="stopTimer(),startTimer(),restart()">Restart Animation</button>
      <button onclick="secondAnimation()">Second Animation</button>
-     <button onclick="stopTimer()" >Stop Timer</button>
+     <button onclick="stopTimer()">Stop Timer</button>
  </div>
+<table id="centerTbl">
+<tr>
+ <td>
+ <div id="timer"></div>
+ <div id="score"></div>
  <div id="container">
   <div id="redPictureBox" >
   </div>
@@ -478,6 +506,9 @@ window.onload=function () {
   </div>
      <p id="text">Right! / Wrong =(</p>
  </div>
+ </td>
+</tr> 
+</table>
  <div id="arrows">
   <table>
       <tr>
