@@ -333,6 +333,7 @@ window.onload=function () {
             stopTimer();
         }
         dv.innerHTML=msg;
+        secondAnimation();
     }
     
     function leftArrow(tf){
@@ -352,6 +353,7 @@ window.onload=function () {
             stopTimer();
         }
         dv.innerHTML=msg;
+        secondAnimation();
     }
     
     function restartAnimation(divId){
@@ -454,7 +456,8 @@ window.onload=function () {
  <label>animation play state = playing</label><button onClick="play()">PlayAnimation</button>
  <label>animation play state = paused</label><button onclick="pause()">PauseAnimation</button>
  <p>Accomplished by deleting name, deleting rules, add rules add name. Like this:</p>
- <p>style.animation = none, delete rules, add rules, style.animation=(new)scrollRight</p>
+ <p>deleting name, delete rules, addrules, add name, playstate running</p>
+ <p>style.animation = none, delete rules, add rules, style.animation=(the new)scrollRight, AnimationPlaystate=running</p>
  -->
  <button onclick="console.log(navigator)">Log Browser Info</button>
  
@@ -462,7 +465,7 @@ window.onload=function () {
  <label>alert</label><button onclick="console.log(pickDivision())">test</button>
 <div id="parentWindow">
  <div id="buttons">
-     <p>deleting name, delete rules, addrules, style.animation = scrollRight, AnimationPlaystate=running</p><button onclick="restart(),startTimer()">Restart Animation</button>
+     <p></p><button onclick="restart(),startTimer()">Restart Animation</button>
      <button onclick="secondAnimation()">Second Animation</button>
      <button onclick="stopTimer()" >Stop Timer</button>
  </div>
