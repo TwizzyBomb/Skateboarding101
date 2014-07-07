@@ -29,7 +29,7 @@ top:0px;
 //left:0px;
 
 width:500px;
-height:300px;
+height:400px;
 
 overflow-x:hidden;
 background-color:transparent;
@@ -72,9 +72,11 @@ div#buttons {
 #startingBox {
     display:block;
     z-index:5;
-    background-image:url('../images/GreenSquare.png');
-    width:300px;
-    height:300px;
+    background-image:url('../images/ReflexTester.png');
+    background-repeat:no-repeat;
+    background-position:50%50%;
+    width:inherit;
+    height:inherit;
     
     -webkit-perspective: 250px;
     -webkit-perspective-origin: 50% 80%;
@@ -94,6 +96,31 @@ div#buttons {
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: playing;
+}
+
+#playButton{
+    display:flex;
+    position:relative;
+    background-image:url('../images/PlayButton.png');
+    background-repeat:no-repeat;
+    background-position:50%50%;
+    top:300px;
+    left:25px;
+    width:200px;
+    height:100px;
+}
+
+#resetButton{
+    display:flex;
+    position:relative;
+    z-index:4;
+    background-image:url('../images/ResetButton.png');
+    background-repeat:no-repeat;
+    background-position:50%50%;
+    top:200px;
+    left:259px;
+    width:200px;
+    height:100px;
 }
 
 #redPictureBox
@@ -152,7 +179,7 @@ div#buttons {
 
 }
 
-#yellowPictureBox 
+#yellowPictureBox
 {   
     position:relative;
     display:none;
@@ -213,10 +240,10 @@ div#buttons {
 {
 /*what it does during the animations*/
     0% {height:0px;width:0px;opacity:0;-webkit-transform:rotate3d(0,0,0,0deg);}
-    25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,1,0,90deg);}
-    50% {height:100px;width:100px;opacity:1;-webkit-transform:rotate3d(1,1,0,180deg);}
-    75% {height:250px;width:250px;opacity:1;-webkit-transform:rotate3d(1,1,0,270deg);}
-    100% {height:300px;width:300px;opacity:1;-webkit-transform:rotate3d(1,1,0,360deg);}
+    25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,0,0,90deg);}
+    50% {height:100px;width:100px;opacity:1;-webkit-transform:rotate3d(1,0,0,180deg);}
+    75% {height:250px;width:250px;opacity:1;-webkit-transform:rotate3d(1,0,0,270deg);}
+    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,0,0,360deg);}
 }
 /*standard or IE */
 @keyframes startingBoxMenu
@@ -613,7 +640,10 @@ function LetterChanges(str) {
   <div id="greenPictureBox" >
   </div>
      <p id="text">Right! / Wrong =(</p>
-     <div id="startingBox"></div>
+     <div id="startingBox">
+         <span id="playButton"></span>
+         <span id="resetButton"></span>
+     </div>
  </div>
  </td>
 </tr> 
