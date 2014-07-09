@@ -27,7 +27,8 @@ text-align:center;
 margin:0 auto;
 top:0px;
 left:0px;
-pointer-events:none;
+//pointer-events:none;
+z-index:-2;
 
 width:500px;
 height:400px;
@@ -80,23 +81,23 @@ div#buttons {
     height:inherit;
     pointer-events:none;
     
-    -webkit-perspective: 250px;
-    -webkit-perspective-origin: 50% 80%;
+    //-webkit-perspective: 250px;
+    //-webkit-perspective-origin: 50% 80%;
     
-    transform-style: preserve-3d;
+    //transform-style: preserve-3d;
     
     -webkit-animation-name: startingBoxMenu;
     -webkit-animation-duration: 2s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: 1;
-    -webkit-animation-fill-mode: forwards;
+    //-webkit-animation-fill-mode: forwards;
     -webkit-animation-play-state: playing;
     /*standard syntax*/
     animation-name: startingBoxMenu;
     animation-duration: 2s;
     animation-timing-function: linear;
     animation-iteration-count: 1;
-    animation-fill-mode: forwards;
+    //animation-fill-mode: forwards;
     animation-play-state: playing;
 }
 
@@ -110,7 +111,7 @@ div#buttons {
     left:25px;
     width:200px;
     height:100px;
-    pointer-events: auto;
+    pointer-events: visible;
     z-index:4;
 }
 
@@ -131,7 +132,7 @@ div#buttons {
 }
 
 #redPictureBox
-{   
+{
     position:relative;
     display:none;
     background-color:blue;
@@ -158,7 +159,7 @@ div#buttons {
 
 }
 
-#greenPictureBox 
+#greenPictureBox
 {   
     position:relative;
     display:none;
@@ -250,7 +251,7 @@ div#buttons {
     25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,1,0,180deg);}
     50% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(0,0,0,360deg);}
     75% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(0,1,1,540deg);}
-    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,0,1,720deg);}
+    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,0,1,720deg);z-index:-1;}
 }
 /*standard or IE */
 @keyframes startingBoxMenu
@@ -269,10 +270,11 @@ button {
 
 #text {
     background-color:white;
-    position:relative;
+    position:absolute;
     display:block;
-    margin-bottom:0px;
-    //height:100px;
+    bottom:9%;
+    //margin-bottom:0px;
+    //height:16px;
     //width:100px;
 }
 
@@ -313,6 +315,8 @@ button {
 <script type="text/javascript">
 var counter;
 window.onload=function () {
+    
+    //document.getElementById("playButton").style.zIndex = "19";
     counter = 1;
     //END OF ONLOAD*/
 }
@@ -491,6 +495,23 @@ window.onload=function () {
     
     // (Re)Starts the Animation
     // Add functionality to play the second animation
+    // Add 3-2-1 screen
+    function ThreeTwoOne(){
+        var num = 3;
+        var elem = document.getElementById("text");
+        document.getElementById("startingBox").style.display="none";
+        window.setInterval(function(){
+            if(num!=0){
+                elem.innerHTML = num;
+                num--;
+            }else if(num==0){
+                elem.innerHTML = "Go!";
+            //clearInterval();
+            }
+        }, 1000);
+       clearInterval();
+    }
+    
     function restart(){
     //Work here to figure out how to get the second animation to play while the next first one does.
     //changeAnimation(rDiv);
@@ -554,9 +575,9 @@ window.onload=function () {
         
     }
     function getCompedZ(){
-        var elem = document.getElementById("container");
-        var zIndx = window.getComputedStyle(elem).getPropertyValue("z-index");
-        console.log(zIndx);
+        var elem = document.getElementById("startingBox");
+        var value = window.getComputedStyle(elem).getPropertyValue("-webkit-animation-iteration-count");
+        console.log(value);
     }
 
     
@@ -585,7 +606,7 @@ window.onload=function () {
      <button onclick="secondAnimation()">Second Animation</button>
      <button onclick="stopTimer()">Stop Timer</button>
      <button onclick="homeScreen()">Home Screen</button>
-     <button onclick="getCompedZ()">get Comped Z</button>
+     <button onclick="ThreeTwoOne()">ThreeTwoOne!</button>
  </div>
 <table id="centerTbl">
 <tr>
@@ -599,9 +620,9 @@ window.onload=function () {
   </div>
   <div id="greenPictureBox" >
   </div>
-     <p id="text">Right! / Wrong =(</p>
+     <p id="text"></p>
      <div id="startingBox">
-         <span id="playButton" onClick="stopTimer(),startTimer(),restart()"></span>
+         <div id="playButton" onClick="stopTimer(),startTimer(),restart()"></div>
          <span id="resetButton" onClick=""></span>
      </div>
  </div>
