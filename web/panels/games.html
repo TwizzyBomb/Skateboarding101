@@ -84,7 +84,7 @@ div#buttons {
     transform-style: preserve-3d;
     
     -webkit-animation-name: startingBoxMenu;
-    -webkit-animation-duration: 5s;
+    -webkit-animation-duration: 2s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: 1;
     -webkit-animation-fill-mode: forwards;
@@ -240,18 +240,20 @@ div#buttons {
 {
 /*what it does during the animations*/
     0% {height:0px;width:0px;opacity:0;-webkit-transform:rotate3d(0,0,0,0deg);}
-    25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,0,0,90deg);}
-    50% {height:100px;width:100px;opacity:1;-webkit-transform:rotate3d(1,0,0,180deg);}
-    75% {height:250px;width:250px;opacity:1;-webkit-transform:rotate3d(1,0,0,270deg);}
-    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,0,0,360deg);}
+    25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,1,0,180deg);}
+    50% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(0,0,0,360deg);}
+    75% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(0,1,1,540deg);}
+    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,0,1,720deg);}
 }
 /*standard or IE */
 @keyframes startingBoxMenu
 {
 /*what it does during the animations*/
-    0% {left:0px;top:0px;opacity:0.01; }
-    50% {left:125px;top:0px;opacity:.5;}
-    100% {left:250px;top:0px;opacity:1;}
+    0% {height:0px;width:0px;opacity:0;-webkit-transform:rotate3d(0,0,0,0deg);}
+    25% {height:50px;width:50px;opacity:.7;-webkit-transform:rotate3d(1,1,1,180deg);}
+    50% {height:100px;width:100px;opacity:1;-webkit-transform:rotate3d(1,1,1,360deg);}
+    75% {height:250px;width:250px;opacity:1;-webkit-transform:rotate3d(1,1,1,540deg);}
+    100% {height:inherit;width:inherit;opacity:1;-webkit-transform:rotate3d(1,1,1,720deg);}
 }
 
 button {
