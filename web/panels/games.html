@@ -26,7 +26,8 @@ display:block;
 text-align:center;
 margin:0 auto;
 top:0px;
-//left:0px;
+left:0px;
+pointer-events:none;
 
 width:500px;
 height:400px;
@@ -77,6 +78,7 @@ div#buttons {
     background-position:50%50%;
     width:inherit;
     height:inherit;
+    pointer-events:none;
     
     -webkit-perspective: 250px;
     -webkit-perspective-origin: 50% 80%;
@@ -108,12 +110,17 @@ div#buttons {
     left:25px;
     width:200px;
     height:100px;
+    pointer-events: auto;
+    z-index:4;
+}
+
+#playButton:hover{
+   background-color:blue; 
 }
 
 #resetButton{
     display:flex;
     position:relative;
-    z-index:4;
     background-image:url('../images/ResetButton.png');
     background-repeat:no-repeat;
     background-position:50%50%;
@@ -287,6 +294,17 @@ button {
 }
 
 </style>
+<!--Microsoft sanctioned method of incorporating IE<10 specific styles -->
+<!--[if IE]>
+      <style type="text/css">
+
+        div#container {
+          filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sample_600x600.png', sizingMethod='scale');
+          background:none !important;
+        }
+
+        </style>
+    <![endif]-->
 <script type="text/javascript" src="../js/games.js"></script>
 
 
@@ -418,6 +436,7 @@ window.onload=function () {
             count = 0;
             //dv.innerHTML="WRONG";
             stopTimer();
+            play("startingBox");
         }
         dv.innerHTML=msg;
         secondAnimation();
@@ -452,8 +471,8 @@ window.onload=function () {
         dv.innerHTML=totalScore;
     }
     
+    // Deletes current keyframe rules
     function restartAnimation(divId){
-        // Deletes current keyframe rules
         rDiv = pickDivision();
         //console.log(rDiv);
         for(var i = 0;i < kLength; i++){
@@ -473,8 +492,10 @@ window.onload=function () {
     // (Re)Starts the Animation
     // Add functionality to play the second animation
     function restart(){
-        //Work here to figure out how to get the second animation to play while the next first one does.
+    //Work here to figure out how to get the second animation to play while the next first one does.
     //changeAnimation(rDiv);
+    document.getElementById("startingBox").style.display="none";
+    document.getElementById("text").style.display="block";
     pickDivision(rDiv);
     restartAnimation(rDiv);//I need this function to set the id with math.random and keep the variable live:
     //document.getElementById(rDiv.identification).style.display= "block";
@@ -514,8 +535,6 @@ window.onload=function () {
     }
     
     
-    
-    
 //!!!!!!!!!!!!!!!!!TESTPLAY FUNCTIONS!!!TESTPLAY FUNCTIONS!!!!!!!!!!!!!!!!!!!!!!
     function play(id){
         //var rDiv = pickDivision();
@@ -527,82 +546,19 @@ window.onload=function () {
         pauseAnimation(rDiv);
     }
     
-    //Add Listener functions from tutorials solution
-    function start(){
-        document.removeEventListener('webkitAnimationStart', start, false);
-        //setTimeout("startChange()", 600);
-    }
-    
-    function addListener(){
-        document.addEventListener('webkitAnimationEnd', restartAnimation, false);
-    }
-    
     //seems to assign true every time?
-    function truthTester(){
-        //var bool = compareAndConquer();
-        //console.log(bool);
-    }
-    
-function LetterChanges(str) { 
-  //figure out how to not do this to the * reg expression
-  //var str2;
-  var vowels = ["a", "e", "i", "o", "u"];
-  var len = str.length;
-  var tmp = ""
-  var charCode;
-  var newString = "";
-  //reg exp - all letters
-  var regEx = /[A-Za-z]/;
-  for(var i=0;i<=len;i++){
-      
-    tmp = str.charAt(i);
-    
-    //tmp = a
-    console.log("tmp = " + tmp);
-    
-    charCode = tmp.charCodeAt();
-    //charCode should equal 67, the code of a
-    console.log("charCode = " + charCode);
-    
-    charCode+=1;
-    //charCode should equal 68 and be capitalized if vowel
-    newLetter = String.fromCharCode(charCode);
-    //checks if new string contains vowel
-    if(vowels.indexOf(newLetter) > -1){
-    switch(newLetter){
-    case "a":
-        newLetter = "A";
-        break;
-    case "e":
-        newLetter = "E";
-        break;
-    case "i":
-        newLetter = "I";
-        break;
-    case "o":
-        newLetter = "O";
-        break;
-    case "u":
-        newLetter = "U";
-        break;
-    }
-        console.log("print this vowel " + newLetter);
+    function homeScreen(){
+        document.getElementById(rDiv).style.display="none";
+        document.getElementById("text").style.display="none";
+        play("startingBox");
         
     }
-    console.log("new charCode = " + charCode);
-    
-
-    //checks if newLetter is a letter
-    if(regEx.test(tmp)===true ){
-        newString+=newLetter;
-    }else{
-       newString+=tmp;
+    function getCompedZ(){
+        var elem = document.getElementById("container");
+        var zIndx = window.getComputedStyle(elem).getPropertyValue("z-index");
+        console.log(zIndx);
     }
-    //newString adds b to string
-    console.log("newString = " + newString); 
-  }
-  return newString; 
-}
+
     
 </script>
 <title>Games</title>
@@ -628,6 +584,8 @@ function LetterChanges(str) {
      <p></p><button onclick="stopTimer(),startTimer(),restart()">Restart Animation</button>
      <button onclick="secondAnimation()">Second Animation</button>
      <button onclick="stopTimer()">Stop Timer</button>
+     <button onclick="homeScreen()">Home Screen</button>
+     <button onclick="getCompedZ()">get Comped Z</button>
  </div>
 <table id="centerTbl">
 <tr>
@@ -643,8 +601,8 @@ function LetterChanges(str) {
   </div>
      <p id="text">Right! / Wrong =(</p>
      <div id="startingBox">
-         <span id="playButton"></span>
-         <span id="resetButton"></span>
+         <span id="playButton" onClick="stopTimer(),startTimer(),restart()"></span>
+         <span id="resetButton" onClick=""></span>
      </div>
  </div>
  </td>

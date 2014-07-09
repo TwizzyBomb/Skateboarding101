@@ -180,3 +180,28 @@ keyframes.insertRule("13% {
     50% {transform:rotate3d(1,0,0,90deg);}
     75% {transform:rotate3d(1,0,0,90deg);}
     100% {transform:rotate3d(1,0,0,90deg);}
+
+
+    //Add Listener functions from tutorials solution
+    function start(){
+        document.removeEventListener('webkitAnimationStart', start, false);
+        //setTimeout("startChange()", 600);
+    }
+    
+    function addListener(){
+        document.addEventListener('webkitAnimationEnd', restartAnimation, false);
+    }
+
+
+IE CONDITIONAL!!!
+
+<!--[if IE]>
+      <style type="text/css">
+
+        .sample {
+          filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='sample_600x600.png', sizingMethod='scale');
+          background:none !important;
+        }
+
+        </style>
+    <![endif]-->
